@@ -1,12 +1,16 @@
 {
-  "name": "Paul-Shorey-Dev",
-  "version": "1.0.0",
-  "description": "Nothing much",
-  "author": "Paul Shorey",
+  "name": "backandsdk",
+  "version": "0.0.2",
+  "description": "Backand sdk for node.js",
+  "author": "Ygal Bellaiche",
   "dependencies": {
     "q": "latest",
     "request": "latest"
   },
   "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/backand/nodejsbknd"
   }
 }
