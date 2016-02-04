@@ -1,20 +1,32 @@
-# NodeJS-BackAnd
+# Node.Js sdk for [Backand](www.backand.com)
 
 NodeJS module to allow use of BackAnd Apis
 
-Very minimal. More coming soon.
-
+Allow users to perform authentification and simple action over Backand
 
 # Instructions
 
-1) npm install
+npm install
 
-2) edit security details 
+# Example
 
-  * Create a ".js" file somewhere on your filesystem, outside of the GIT repository or website root. Contents of this file should be: exports = { backand: { username: '', password: '', appname: '' } };
+<code>
+var backand = require("./backand");
 
-  * Create system variable to link to this file. This variable is used by app.js to find the secret credentials Command line: export APP_CREDENTIALS_FILE="/Volumes/Media/WEB-APP/secret/all.js"
+// anonymous authetication
+backand.anoymousAuth('08fd510a-4b52-43fa-938f-f2c841bd3106')
+    .then(function(){
+        backand.get('/1/objects/todo?pageSize=1&pageNumber=1').then(function(data){
+            console.log('anoymousAuth Data: ',data);
+        });
+    });
 
-  * Alternatively, temporarily just type the credentials into app.js
 
-3) node app.js
+// authentication with user and password
+backand.auth({ username:'test@angular2.com', password:'angular2', appname:'angular2' })
+    .then(function(){
+        backand.get('/1/objects/todo?pageSize=1&pageNumber=1').then(function(data){
+            console.log('auth Data: ',data);
+        });
+    });
+</code>
