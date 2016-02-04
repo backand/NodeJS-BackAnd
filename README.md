@@ -10,23 +10,22 @@ npm install
 
 # Example
 
-<code>
-var backand = require("./backand");
 
-// anonymous authetication
-backand.anoymousAuth('08fd510a-4b52-43fa-938f-f2c841bd3106')
-    .then(function(){
-        backand.get('/1/objects/todo?pageSize=1&pageNumber=1').then(function(data){
-            console.log('anoymousAuth Data: ',data);
+    var backand = require("./backand");
+    
+    // anonymous authetication
+    backand.anoymousAuth('08fd510a-4b52-43fa-938f-f2c841bd3106')
+        .then(function(){
+            backand.get('/1/objects/todo?pageSize=1&pageNumber=1').then(function(data){
+                console.log('anoymousAuth Data: ',data);
+            });
         });
-    });
-
-
-// authentication with user and password
-backand.auth({ username:'test@angular2.com', password:'angular2', appname:'angular2' })
-    .then(function(){
-        backand.get('/1/objects/todo?pageSize=1&pageNumber=1').then(function(data){
-            console.log('auth Data: ',data);
+    
+    
+    // authentication with user and password
+    backand.auth({ username:'test@angular2.com', password:'angular2', appname:'angular2' })
+        .then(function(){
+            backand.get('/1/objects/todo?pageSize=1&pageNumber=1').then(function(data){
+                console.log('auth Data: ',data);
+            });
         });
-    });
-</code>
