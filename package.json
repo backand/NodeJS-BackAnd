@@ -1,14 +1,13 @@
 {
   "name": "backandsdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Backand sdk for node.js",
   "author": "Ygal Bellaiche",
   "dependencies": {
     "q": "latest",
     "request": "latest"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/backand/nodejsbknd"
