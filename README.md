@@ -11,7 +11,7 @@ npm install
 # Example
 
 
-    var backand = require("./backand");
+    var backand = require("backandsdk/backand");
     
     // anonymous authetication
     backand.anoymousAuth('08fd510a-4b52-43fa-938f-f2c841bd3106')
