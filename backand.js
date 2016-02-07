@@ -76,24 +76,33 @@ BackandSdk.prototype.getUserData = function(){
     return this.userData;
 }
 
+
 BackandSdk.prototype.get = function (uri, data, filter) {
     var backand = this;
     var deferred = q.defer();
+    var haveData = false;
+    function getUrl(uri, haveData, data){
+        var res =  serverUrl + uri + (haveData ? data : '')
+        //console.log(res);
+        return res;
+    }
+
     if (data) {
-        data = '?' + toQueryString(data);
+        haveData = true;
+        data = '?parameters=' + toQueryStringComplex(data);
     }
 
     if(filter){
-        if(!data){
+        if(!haveData){
             data = '?';
         }
-        data += 'filter=' +toQueryString(filter);
+        haveData = true;
+        data += 'filter=' + toQueryStringComplex(filter);
     }
 
-        console.log(serverUrl + uri + data);
     var req = {
         method: 'GET',
-        url: serverUrl + uri + data,
+        url: getUrl(uri, haveData, data),
         json: '',
         headers: backand.getHeader()
     };
@@ -174,9 +183,20 @@ BackandSdk.prototype.handleResponse = function (deferred, error, response, data)
     }
 };
 
-var toQueryString = function (obj) {
+var toQueryStringComplex = function (obj) {
     return JSON.stringify(obj);
 };
+
+var toQueryString = function (obj) {
+    var parts = [];
+    for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+            parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
+        }
+    }
+    return parts.join("&");
+};
+
 
 
 
