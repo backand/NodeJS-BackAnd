@@ -10,7 +10,7 @@
   },
   "scripts": {
     "coverage": " istanbul cover /usr/local/lib/node_modules/mocha/bin/_mocha -- -R spec"
-  }
+  },
   "devDependencies": {},
   "repository": {
     "type": "git",
