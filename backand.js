@@ -15,10 +15,13 @@
 
 var q = require('q');
 var request  = require('request');
+var queryString = require('qs');
 
 const serverUrl = 'https://api.backand.com';
 
 var BackandSdk = function() {
+
+    this.userData = {};
 
     // private method?
     this.getHeader = function(){
@@ -61,6 +64,7 @@ BackandSdk.prototype.auth = function (settings) {
                 return false;
             }
 
+            backand.userData = data;
             backand.header.name = 'Authorization';
             backand.header.value = 'Bearer ' + data.access_token;
         }
@@ -68,18 +72,29 @@ BackandSdk.prototype.auth = function (settings) {
     return deferred.promise;
 };
 
-BackandSdk.prototype.get = function (uri, data) {
+BackandSdk.prototype.getUserData = function(){
+    return this.userData;
+}
+
+BackandSdk.prototype.get = function (uri, data, filter) {
     var backand = this;
     var deferred = q.defer();
     if (data) {
         data = '?' + toQueryString(data);
     }
 
+    if(filter){
+        if(!data){
+            data = '?';
+        }
+        data += 'filter=' +toQueryString(filter);
+    }
 
+        console.log(serverUrl + uri + data);
     var req = {
         method: 'GET',
         url: serverUrl + uri + data,
-        json: {},
+        json: '',
         headers: backand.getHeader()
     };
     request(
@@ -160,13 +175,7 @@ BackandSdk.prototype.handleResponse = function (deferred, error, response, data)
 };
 
 var toQueryString = function (obj) {
-    var parts = [];
-    for (var i in obj) {
-        if (obj.hasOwnProperty(i)) {
-            parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
-        }
-    }
-    return parts.join("&");
+    return JSON.stringify(obj);
 };
 
 

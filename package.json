@@ -5,8 +5,12 @@
   "author": "Ygal Bellaiche",
   "dependencies": {
     "q": "latest",
+    "qs": "^6.1.0",
     "request": "latest"
   },
+  "scripts": {
+    "coverage": " istanbul cover /usr/local/lib/node_modules/mocha/bin/_mocha -- -R spec"
+  }
   "devDependencies": {},
   "repository": {
     "type": "git",
