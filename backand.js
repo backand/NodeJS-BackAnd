@@ -181,6 +181,9 @@ BackandSdk.prototype.handleResponse = function (deferred, error, response, data)
         deferred.resolve(data);
         return data;
     }
+    else{
+        deferred.resolve(undefined);
+    }
 };
 
 var toQueryStringComplex = function (obj) {
