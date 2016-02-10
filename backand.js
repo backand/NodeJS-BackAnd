@@ -14,17 +14,17 @@
  */
 
 var q = require('q');
-var request  = require('request');
+var request = require('request');
 var queryString = require('qs');
 
 const serverUrl = 'https://api.backand.com';
 
-var BackandSdk = function() {
+var BackandSdk = function () {
 
     this.userData = {};
-
+    this.header = {};
     // private method?
-    this.getHeader = function(){
+    this.getHeader = function () {
         var res = {};
         res[this.header.name] = this.header.value;
         return res;
@@ -72,7 +72,7 @@ BackandSdk.prototype.auth = function (settings) {
     return deferred.promise;
 };
 
-BackandSdk.prototype.basicAuth = function(token) {
+BackandSdk.prototype.basicAuth = function (token) {
     var backand = this;
     backand.header = {};
     var deferred = q.defer();
@@ -84,7 +84,7 @@ BackandSdk.prototype.basicAuth = function(token) {
 }
 
 
-BackandSdk.prototype.getUserData = function(){
+BackandSdk.prototype.getUserData = function () {
     return this.userData;
 }
 
@@ -93,8 +93,9 @@ BackandSdk.prototype.get = function (uri, data, filter) {
     var backand = this;
     var deferred = q.defer();
     var haveData = false;
-    function getUrl(uri, haveData, data){
-        var res =  serverUrl + uri + (haveData ? data : '')
+
+    function getUrl(uri, haveData, data) {
+        var res = serverUrl + uri + (haveData ? data : '')
         //console.log(res);
         return res;
     }
@@ -104,8 +105,8 @@ BackandSdk.prototype.get = function (uri, data, filter) {
         data = '?parameters=' + toQueryStringComplex(data);
     }
 
-    if(filter){
-        if(!haveData){
+    if (filter) {
+        if (!haveData) {
             data = '?';
         }
         haveData = true;
@@ -193,7 +194,7 @@ BackandSdk.prototype.handleResponse = function (deferred, error, response, data)
         deferred.resolve(data);
         return data;
     }
-    else{
+    else {
         deferred.resolve(undefined);
     }
 };
@@ -213,6 +214,4 @@ var toQueryString = function (obj) {
 };
 
 
-
-
-module.exports = new BackandSdk();
+module.exports = BackandSdk;
