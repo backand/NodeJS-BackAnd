@@ -17,10 +17,9 @@ var q = require('q');
 var request = require('request');
 var queryString = require('qs');
 
-const serverUrl = 'https://api.backand.com';
 
-var BackandSdk = function () {
-
+var BackandSdk = function (serverUrl) {
+    this.serverUrl = serverUrl || 'https://api.backand.com';
     this.userData = {};
     this.header = {};
     // private method?
@@ -49,7 +48,7 @@ BackandSdk.prototype.auth = function (settings) {
     backand.settings = {};
     request(
         {
-            url: serverUrl + '/token',
+            url: backand.serverUrl + '/token',
             method: "POST",
             form: {
                 username: settings.username,
@@ -83,11 +82,9 @@ BackandSdk.prototype.basicAuth = function (token) {
     return deferred.promise;
 }
 
-
 BackandSdk.prototype.getUserData = function () {
     return this.userData;
 }
-
 
 BackandSdk.prototype.get = function (uri, data, filter) {
     var backand = this;
@@ -95,7 +92,7 @@ BackandSdk.prototype.get = function (uri, data, filter) {
     var haveData = false;
 
     function getUrl(uri, haveData, data) {
-        var res = serverUrl + uri + (haveData ? data : '')
+        var res = backand.serverUrl + uri + (haveData ? data : '')
         //console.log(res);
         return res;
     }
@@ -139,7 +136,7 @@ BackandSdk.prototype.post = function (uri, json, returnObject) {
     request(
         {
             method: 'POST',
-            url: serverUrl + uri + ret,
+            url: backand.serverUrl + uri + ret,
             json: json,
             headers: backand.getHeader()
         },
@@ -159,7 +156,7 @@ BackandSdk.prototype.put = function (uri, json) {
     request(
         {
             method: 'PUT',
-            url: serverUrl + uri,
+            url: backand.serverUrl + uri,
             json: json,
             headers: backand.getHeader()
         },

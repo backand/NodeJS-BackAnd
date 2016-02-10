@@ -2,7 +2,8 @@
  * Created by backand on 2/7/16.
  */
 
-var backand = require("./../backand");
+var BackandSdk = require("./../backand");
+var backand = new BackandSdk();
 var assert = require("assert");
 
 function connect() {
