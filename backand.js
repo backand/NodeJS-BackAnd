@@ -72,6 +72,18 @@ BackandSdk.prototype.auth = function (settings) {
     return deferred.promise;
 };
 
+BackandSdk.prototype.basicAuth = function(token) {
+    var backand = this;
+    backand.header = {};
+    var deferred = q.defer();
+    auth = "Basic " + new Buffer(token).toString("base64");
+    backand.header.name = 'Authorization';
+    backand.header.value = auth;
+    deferred.resolve();
+    return deferred.promise;
+}
+
+
 BackandSdk.prototype.getUserData = function(){
     return this.userData;
 }
