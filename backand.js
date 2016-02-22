@@ -172,7 +172,8 @@ BackandSdk.prototype.put = function (uri, json) {
 
 BackandSdk.prototype.handleResponse = function (deferred, error, response, data) {
     if (error || response.statusCode != 200) {
-        error = 'Status code: "' + response.statusCode + '"' + response.body + ' requestUrl: ' + response.request.href;
+        error = 'Status code: "' + response.statusCode + ' "' +
+            typeof response.body === 'object' ? JSON.stringify(response.body) : response.body + ' requestUrl: ' + response.request.href;
         console.error('Error: ', error);
         deferred.reject(error);
         return false;
