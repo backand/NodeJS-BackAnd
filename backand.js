@@ -133,20 +133,22 @@ BackandSdk.prototype.post = function (uri, json, returnObject) {
     var deferred = q.defer();
     var ret = returnObject ? '?returnObject=true' : '';
 
+
     request(
-        {
-            method: 'POST',
-            url: backand.serverUrl + uri + ret,
-            json: json,
-            headers: backand.getHeader()
-        },
-        function (error, response, data) {
-            data = backand.handleResponse(deferred, error, response, data)
-            if (!data) {
-                return false;
+            {
+                method: 'POST',
+                url: backand.serverUrl + uri + ret,
+                json: json,
+                headers: backand.getHeader()
+            },
+            function (error, response, data) {
+                data = backand.handleResponse(deferred, error, response, data)
+                if (!data) {
+                    return false;
+                }
             }
-        }
-    );
+        );
+
     return deferred.promise;
 };
 
@@ -173,7 +175,7 @@ BackandSdk.prototype.put = function (uri, json) {
 BackandSdk.prototype.handleResponse = function (deferred, error, response, data) {
     if (error || response.statusCode != 200) {
         error = 'Status code: "' + response.statusCode + ' "' +
-            typeof response.body === 'object' ? JSON.stringify(response.body) : response.body + ' requestUrl: ' + response.request.href;
+            typeof response.body === 'object' ? JSON.stringify(response.body) : response.body + response.request ?  ' requestUrl: ' + response.request.href : '';
         console.error('Error: ', error);
         deferred.reject(error);
         return false;
