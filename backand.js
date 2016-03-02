@@ -171,11 +171,34 @@ BackandSdk.prototype.put = function (uri, json) {
     );
     return deferred.promise;
 };
+BackandSdk.prototype.formatErrorMessage = function(response, error) {
+    var str = "";
 
+    if(response.statusCode){
+        str += 'Status code: "' + response.statusCode + " ";
+    }
+
+    if(typeof response.body === 'object'){
+        str +=  JSON.stringify(response.body);
+    }else {
+        str += response.body;
+    }
+    str += " ";
+
+    if(response.request && response.request.href) {
+        str += ' requestUrl: ' + response.request.href;
+    }
+
+    if(error) {
+        str += error;
+    }
+
+    return str;
+}
 BackandSdk.prototype.handleResponse = function (deferred, error, response, data) {
+
     if (error || response.statusCode != 200) {
-        error = 'Status code: "' + response.statusCode + ' "' +
-            typeof response.body === 'object' ? JSON.stringify(response.body) : response.body + (response.request ?  ' requestUrl: ' + response.request.href : '');
+        error = this.formatErrorMessage(response, error);
         console.error('Error: ', error);
         deferred.reject(error);
         return false;
