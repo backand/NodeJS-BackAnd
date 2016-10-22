@@ -171,6 +171,27 @@ BackandSdk.prototype.put = function (uri, json) {
     );
     return deferred.promise;
 };
+
+BackandSdk.prototype.delete = function (uri, json) {
+    var backand = this;
+    var deferred = q.defer();
+    request(
+        {
+            method: 'DELETE',
+            url: backand.serverUrl + uri,
+            json: json,
+            headers: backand.getHeader()
+        },
+        function (error, response, data) {
+            data = backand.handleResponse(deferred, error, response, data)
+            if (!data) {
+                return false;
+            }
+        }
+    );
+    return deferred.promise;
+};
+
 BackandSdk.prototype.formatErrorMessage = function(response, error) {
     var str = "";
 
