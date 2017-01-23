@@ -194,22 +194,23 @@ BackandSdk.prototype.delete = function (uri, json) {
 
 BackandSdk.prototype.formatErrorMessage = function(response, error) {
     var str = "";
+ 
+    if(response){
+       if(response.statusCode){
+            str += 'Status code: "' + response.statusCode + " ";
+        }
 
-    if(response.statusCode){
-        str += 'Status code: "' + response.statusCode + " ";
+        if(typeof response.body === 'object'){
+            str +=  JSON.stringify(response.body);
+        }else {
+            str += response.body;
+        }
+        str += " ";
+
+        if(response.request && response.request.href) {
+            str += ' requestUrl: ' + response.request.href;
+        }
     }
-
-    if(typeof response.body === 'object'){
-        str +=  JSON.stringify(response.body);
-    }else {
-        str += response.body;
-    }
-    str += " ";
-
-    if(response.request && response.request.href) {
-        str += ' requestUrl: ' + response.request.href;
-    }
-
     if(error) {
         str += error;
     }
