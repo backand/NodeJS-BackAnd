@@ -1,6 +1,6 @@
 {
   "name": "backandsdk",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Backand sdk for node.js",
   "author": "Ygal Bellaiche",
   "dependencies": {
