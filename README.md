@@ -1,4 +1,5 @@
 # Node.Js sdk for [Backand](www.backand.com)
+###**NOTE - This SDK is deprecated, please use our new SDK at https://github.com/backand/vanilla-sdk**
 
 NodeJS module to allow use of BackAnd Apis
 
